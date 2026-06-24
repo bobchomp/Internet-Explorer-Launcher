@@ -22,7 +22,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install PyInstaller
-        run: pip install pyinstaller
+        run: pip install pyinstaller pywin32
 
       - name: Build exe
         run: pyinstaller --onefile --windowed --name IELauncher ielauncher.py
