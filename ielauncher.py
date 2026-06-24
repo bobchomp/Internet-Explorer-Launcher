@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox
-import subprocess
-import os
 
 def launch_in_ie():
     url = url_entry.get().strip()
@@ -11,16 +9,13 @@ def launch_in_ie():
     if not url.startswith("http://") and not url.startswith("https://"):
         url = "http://" + url
 
-    ie_paths = [
-        r"C:\Program Files\Internet Explorer\iexplore.exe",
-        r"C:\Program Files (x86)\Internet Explorer\iexplore.exe",
-    ]
-    ie_exe = next((p for p in ie_paths if os.path.exists(p)), None)
-    if ie_exe is None:
-        messagebox.showerror("Not Found", "Internet Explorer not found on this system.")
-        return
-
-    subprocess.Popen([ie_exe, url])
+    try:
+        import win32com.client
+        ie = win32com.client.Dispatch("InternetExplorer.Application")
+        ie.Visible = True
+        ie.Navigate(url)
+    except Exception as e:
+        messagebox.showerror("Error", f"Could not launch Internet Explorer:\n{e}")
 
 root = tk.Tk()
 root.title("IE Launcher")
