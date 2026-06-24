@@ -14,6 +14,7 @@ def launch_in_ie():
         ie = win32com.client.Dispatch("InternetExplorer.Application")
         ie.Visible = True
         ie.Navigate(url)
+        root.destroy()
     except Exception as e:
         messagebox.showerror("Error", f"Could not launch Internet Explorer:\n{e}")
 
