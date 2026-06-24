@@ -1,9 +1,11 @@
 name: Build IE Launcher
 
 on:
-  push:
-    branches: ["**"]
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Version (e.g. 1.0.0)"
+        required: true
 
 jobs:
   build:
@@ -23,8 +25,9 @@ jobs:
       - name: Build exe
         run: pyinstaller --onefile --windowed --name IELauncher ielauncher.py
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Create release and upload exe
+        uses: softprops/action-gh-release@v2
         with:
-          name: IELauncher
-          path: dist/IELauncher.exe
+          tag_name: "v${{ github.event.inputs.version }}"
+          name: "IE Launcher v${{ github.event.inputs.version }}"
+          files: dist/IELauncher.exe
