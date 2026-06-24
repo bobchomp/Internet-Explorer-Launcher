@@ -27,9 +27,14 @@ jobs:
       - name: Build exe
         run: pyinstaller --onefile --windowed --name IELauncher ielauncher.py
 
-      - name: Create release and upload exe
+      - name: Build installer
+        run: iscc "/DAppVersion=${{ github.event.inputs.version }}" installer.iss
+
+      - name: Create release and upload
         uses: softprops/action-gh-release@v2
         with:
           tag_name: "v${{ github.event.inputs.version }}"
           name: "IE Launcher v${{ github.event.inputs.version }}"
-          files: dist/IELauncher.exe
+          files: |
+            Output/IELauncher-Setup.exe
+            dist/IELauncher.exe
