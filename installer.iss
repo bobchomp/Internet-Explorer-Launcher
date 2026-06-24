@@ -1,7 +1,7 @@
 [Setup]
 AppName=IE Launcher
 AppVersion={#AppVersion}
-AppPublisher=bobchomp
+AppPublisher=Ross Mackenzie
 DefaultDirName={autopf}\IELauncher
 DefaultGroupName=IE Launcher
 OutputBaseFilename=IELauncher-Setup
