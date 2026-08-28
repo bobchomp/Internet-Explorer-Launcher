@@ -25,10 +25,10 @@ jobs:
         run: pip install pyinstaller pywin32
 
       - name: Inject version
-        run: python -c "
-content = open('ielauncher.py').read()
-open('ielauncher.py', 'w').write(content.replace('VERSION = \"dev\"', 'VERSION = \"${{ github.event.inputs.version }}\"'))
-"
+        shell: python
+        run: |
+          content = open('ielauncher.py').read()
+          open('ielauncher.py', 'w').write(content.replace('VERSION = "dev"', 'VERSION = "${{ github.event.inputs.version }}"'))
 
       - name: Build exe
         run: pyinstaller --onefile --windowed --name IELauncher ielauncher.py
