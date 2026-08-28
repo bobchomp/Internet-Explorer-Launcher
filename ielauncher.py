@@ -77,14 +77,19 @@ def launch_in_ie():
     if not url.startswith("http://") and not url.startswith("https://"):
         url = "http://" + url
 
-    try:
-        import win32com.client
-        ie = win32com.client.Dispatch("InternetExplorer.Application")
-        ie.Visible = True
-        ie.Navigate(url)
+    ps_script = (
+        f'$ie = New-Object -ComObject InternetExplorer.Application;'
+        f'$ie.Visible = $true;'
+        f'$ie.Navigate("{url}")'
+    )
+    result = subprocess.run(
+        ["powershell", "-WindowStyle", "Hidden", "-Command", ps_script],
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        messagebox.showerror("Error", f"Could not launch Internet Explorer:\n{result.stderr.decode().strip()}")
+    else:
         root.destroy()
-    except Exception as e:
-        messagebox.showerror("Error", f"Could not launch Internet Explorer:\n{e}")
 
 
 root = tk.Tk()

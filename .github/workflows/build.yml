@@ -22,7 +22,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install PyInstaller
-        run: pip install pyinstaller pywin32
+        run: pip install pyinstaller
 
       - name: Inject version
         shell: python
